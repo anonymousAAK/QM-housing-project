@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valuing the American Dream: A Linear Regression Analysis of the Boston Housing Market</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Tailwind gray-50 */
+        }
+        .report-title {
+            font-weight: 800;
+        }
+        .section-title {
+            font-weight: 700;
+        }
+        .stat-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        .stat-value {
+            font-weight: 800;
+        }
+        .positive { color: #16a34a; /* Tailwind green-600 */ }
+        .negative { color: #dc2626; /* Tailwind red-600 */ }
+        .citation-link {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #4f46e5; /* Tailwind indigo-600 */
+            vertical-align: super;
+            text-decoration: none;
+        }
+        .citation-link:hover {
+            text-decoration: underline;
+        }
+        .bg-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e2e8f0' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-pattern">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+            <!-- Header -->
+            <header class="text-center mb-16">
+                <p class="text-indigo-600 font-semibold mb-2">MBA Term 1 Report</p>
+                <h1 class="report-title text-4xl md:text-5xl text-gray-800">Valuing the American Dream</h1>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">A Linear Regression Analysis of the 1970s Boston Housing Market</p>
+            </header>
+
+            <!-- Executive Summary -->
+            <section id="summary" class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg mb-16">
+                <h2 class="section-title text-2xl text-gray-800 mb-4 flex items-center">
+                    <i data-lucide="briefcase" class="mr-3 text-indigo-600"></i>
+                    Executive Summary
+                </h2>
+                <p class="text-gray-600 leading-relaxed">
+                    This report analyzes the 1970s Boston Housing dataset to identify key drivers of home values using multiple linear regression. The most significant factors are the number of rooms per dwelling (<span class="font-semibold text-gray-700">RM</span>), which positively impacts value, and the percentage of the local population with lower socioeconomic status (<span class="font-semibold text-gray-700">LSTAT</span>), which has a strong negative impact. Our final model explains approximately <span class="font-semibold text-gray-700">75% of the variation in home prices</span> (Adjusted R² of 0.752). While the dataset's age and ethical issues prevent its use for modern forecasting, the analysis provides timeless strategic insights for real estate investment and urban policy, underscoring how investments in public safety, environmental quality, and education can create tangible economic value.
+                </p>
+            </section>
+
+            <!-- Key Drivers Infographic -->
+            <section id="drivers" class="mb-16">
+                <h2 class="section-title text-3xl text-center text-gray-800 mb-10">Key Drivers of Property Value</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    
+                    <!-- Card: Number of Rooms -->
+                    <div class="stat-card">
+                        <div class="flex items-center text-gray-500 mb-4">
+                            <i data-lucide="home" class="mr-2"></i>
+                            <span class="font-semibold">Property Size</span>
+                        </div>
+                        <p class="text-xl text-gray-800 mb-2">Average Number of Rooms (RM)</p>
+                        <p class="stat-value text-4xl positive">+ $4,136</p>
+                        <p class="text-gray-500 mt-1">Predicted increase in value per additional room.</p>
+                    </div>
+                    
+                    <!-- Card: Lower Status Population -->
+                    <div class="stat-card">
+                        <div class="flex items-center text-gray-500 mb-4">
+                            <i data-lucide="users" class="mr-2"></i>
+                            <span class="font-semibold">Socioeconomic Status</span>
+                        </div>
+                        <p class="text-xl text-gray-800 mb-2">% Lower Status Population (LSTAT)</p>
+                        <p class="stat-value text-4xl negative">- $494</p>
+                        <p class="text-gray-500 mt-1">Predicted decrease in value per 1% increase.</p>
+                    </div>
+
+                    <!-- Card: Pollution -->
+                    <div class="stat-card">
+                        <div class="flex items-center text-gray-500 mb-4">
+                            <i data-lucide="wind" class="mr-2"></i>
+                            <span class="font-semibold">Environmental Quality</span>
+                        </div>
+                        <p class="text-xl text-gray-800 mb-2">Nitric Oxides (NOX)</p>
+                        <p class="stat-value text-4xl negative">- $16,588</p>
+                        <p class="text-gray-500 mt-1">Predicted value decrease per unit of NOX concentration.</p>
+                    </div>
+
+                    <!-- Card: Commute -->
+                    <div class="stat-card">
+                        <div class="flex items-center text-gray-500 mb-4">
+                            <i data-lucide="map-pin" class="mr-2"></i>
+                            <span class="font-semibold">Location & Accessibility</span>
+                        </div>
+                        <p class="text-xl text-gray-800 mb-2">Distance to Employment (DIS)</p>
+                        <p class="stat-value text-3xl negative">- $1,441</p>
+                        <p class="text-gray-500 mt-1">Value decrease per unit of distance from job centers.</p>
+                    </div>
+
+                    <!-- Card: Schools -->
+                    <div class="stat-card">
+                        <div class="flex items-center text-gray-500 mb-4">
+                            <i data-lucide="school" class="mr-2"></i>
+                            <span class="font-semibold">Education</span>
+                        </div>
+                        <p class="text-xl text-gray-800 mb-2">Pupil-Teacher Ratio (PTRATIO)</p>
+                        <p class="stat-value text-3xl negative">- $898</p>
+                        <p class="text-gray-500 mt-1">Value decrease for each additional student per teacher.</p>
+                    </div>
+
+                    <!-- Card: River Proximity -->
+                    <div class="stat-card">
+                        <div class="flex items-center text-gray-500 mb-4">
+                            <i data-lucide="waves" class="mr-2"></i>
+                            <span class="font-semibold">Premium Amenity</span>
+                        </div>
+                        <p class="text-xl text-gray-800 mb-2">Charles River Frontage (CHAS)</p>
+                        <p class="stat-value text-3xl positive">+ $3,384</p>
+                        <p class="text-gray-500 mt-1">The premium for properties bordering the river.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Model Performance & Limitations -->
+            <section id="model" class="mb-16">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
+                    
+                    <!-- Performance -->
+                    <div class="text-center">
+                        <h3 class="section-title text-2xl text-gray-800 mb-4">Model Performance</h3>
+                        <div class="bg-white p-8 rounded-xl shadow-lg inline-block">
+                             <p class="text-indigo-600 font-bold text-lg">Adjusted R-Squared</p>
+                             <p class="stat-value text-8xl text-gray-800 my-2">75.2%</p>
+                             <p class="text-gray-600 max-w-xs mx-auto">This means our model's chosen variables can explain about 75% of the differences in home prices in the dataset.</p>
+                        </div>
+                    </div>
+
+                    <!-- Limitations -->
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-lg">
+                        <h3 class="section-title text-2xl text-gray-800 mb-4 flex items-center">
+                            <i data-lucide="alert-triangle" class="mr-3 text-amber-600"></i>
+                            Critical Limitations
+                        </h3>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li><span class="font-semibold">The "1978 Problem":</span> Data is over 40 years old and irrelevant for current price prediction.</li>
+                            <li><span class="font-semibold">Ethical Flaws:</span> Variables like 'B' were constructed on racist assumptions, encoding bias into the dataset.</li>
+                            <li><span class="font-semibold">Statistical Violations:</span> The data violates key linear regression assumptions like linearity and constant variance of errors.</li>
+                            <li><span class="font-semibold">Omitted Variables:</span> Fails to account for modern value drivers like interior quality, walkability, or climate risk.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Strategic Implications -->
+            <section id="strategy" class="max-w-6xl mx-auto mb-16">
+                <h2 class="section-title text-3xl text-center text-gray-800 mb-10">Strategic Implications</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <!-- For Real Estate Investors -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="section-title text-2xl text-gray-800 mb-4 flex items-center">
+                           <i data-lucide="line-chart" class="mr-3 text-green-600"></i>
+                           For Real Estate Investors
+                        </h3>
+                        <ul class="list-disc list-inside text-gray-600 space-y-3">
+                            <li>Provides a <span class="font-semibold">timeless valuation framework</span> focusing on property size, neighborhood quality, and location.</li>
+                            <li>Highlights opportunities to find <span class="font-semibold">undervalued assets</span> where modern trends (e.g., new transit) have disrupted historical patterns.</li>
+                            <li>Demonstrates the evolution towards <span class="font-semibold">data-driven decision-making</span>, from static academic models to dynamic real-time dashboards like GBAR's.</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- For Urban Policymakers -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="section-title text-2xl text-gray-800 mb-4 flex items-center">
+                            <i data-lucide="landmark" class="mr-3 text-blue-600"></i>
+                            For Urban Policymakers
+                        </h3>
+                        <ul class="list-disc list-inside text-gray-600 space-y-3">
+                            <li><span class="font-semibold">Quantifies the ROI</span> of public investments in environmental quality (NOX), public safety (CRIM), and education (PTRATIO).</li>
+                            <li>Provides a <span class="font-semibold">historical justification</span> for modern policies like Inclusionary Zoning and Transit-Oriented Development (TOD).</li>
+                            <li>Represents an early precursor to modern <span class="font-semibold">data-driven governance</span> initiatives like the Analyze Boston open data portal.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
+
