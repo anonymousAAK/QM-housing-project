@@ -71,6 +71,28 @@
                 </p>
             </section>
 
+
+              <!-- The Analytical Approach -->
+            <section id="methodology">
+                <h2 class="section-title text-3xl text-gray-800 mb-6 text-center">The Analytical Approach</h2>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-white p-6 rounded-lg shadow-md border">
+                        <i data-lucide="scan-line" class="mx-auto h-12 w-12 text-indigo-500 mb-4"></i>
+                        <h3 class="font-semibold text-lg text-gray-800">1. Objective</h4>
+                        <p class="text-gray-600 text-sm mt-2">To build a linear regression model that accurately identifies and quantifies the structural, neighborhood, and environmental factors influencing median home values in Boston's suburbs.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border">
+                        <i data-lucide="function-square" class="mx-auto h-12 w-12 text-indigo-500 mb-4"></i>
+                        <h3 class="font-semibold text-lg text-gray-800">2. Model Selection</h4>
+                        <p class="text-gray-600 text-sm mt-2">Multiple Linear Regression was chosen for its interpretability, allowing us to isolate the individual price impact of each variable (e.g., the dollar value of an extra room), which is ideal for strategic business analysis.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border">
+                        <i data-lucide="filter" class="mx-auto h-12 w-12 text-indigo-500 mb-4"></i>
+                        <h3 class="font-semibold text-lg text-gray-800">3. Variable Curation</h4>
+                        <p class="text-gray-600 text-sm mt-2">From 13 potential predictors, we selected variables with the highest statistical significance and lowest multicollinearity, focusing on those that offered clear, actionable business insights (RM, LSTAT, NOX, etc.).</p>
+                    </div>
+                </div>
+            </section>
             <!-- Key Drivers Infographic -->
             <section id="drivers" class="mb-16">
                 <h2 class="section-title text-3xl text-center text-gray-800 mb-10">Key Drivers of Property Value</h2>
@@ -169,6 +191,38 @@
                             <li><span class="font-semibold">Ethical Flaws:</span> Variables like 'B' were constructed on racist assumptions, encoding bias into the dataset.</li>
                             <li><span class="font-semibold">Statistical Violations:</span> The data violates key linear regression assumptions like linearity and constant variance of errors.</li>
                             <li><span class="font-semibold">Omitted Variables:</span> Fails to account for modern value drivers like interior quality, walkability, or climate risk.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+                        <!-- Strategic Implications -->
+            <section id="implications">
+                <h2 class="section-title text-3xl text-gray-800 mb-8 text-center">Modern Strategic Implications</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- For Real Estate Investors -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border">
+                        <h3 class="section-title text-2xl text-gray-800 mb-4 flex items-center">
+                            <i data-lucide="line-chart" class="mr-3 text-indigo-600"></i>
+                           For Real Estate Investors
+                        </h3>
+                        <ul class="list-disc list-inside text-gray-600 space-y-3">
+                            <li>Provides a <span class="font-semibold">timeless valuation framework</span>. The core principle—that value is a function of property size (RM), neighborhood quality (LSTAT), and location—remains the bedrock of real estate analysis.</li>
+                            <li>Highlights opportunities to <span class="font-semibold">identify undervalued assets</span> by finding areas where modern trends (e.g., a new transit line, rezoning) disrupt historical patterns captured in older data.</li>
+                            <li>Demonstrates the competitive advantage of <span class="font-semibold">data-driven decision-making</span>. The core logic here is now supercharged in modern platforms that use real-time data, moving beyond static models.</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- For Urban Policymakers -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border">
+                        <h3 class="section-title text-2xl text-gray-800 mb-4 flex items-center">
+                            <i data-lucide="landmark" class="mr-3 text-indigo-600"></i>
+                           For Urban Policymakers
+                        </h3>
+                        <ul class="list-disc list-inside text-gray-600 space-y-3">
+                            <li><span class="font-semibold">Justifies Public Investment:</span> The model quantifies the ROI on quality-of-life improvements. For example, it shows that a policy reducing NOX pollution could be justified by the subsequent increase in property values and tax base.</li>
+                            <li><span class="font-semibold">Provides a Historical Baseline</span> for evaluating the success of modern policies like Inclusionary Zoning or Transit-Oriented Development (TOD) by comparing neighborhood trajectories against these historical drivers.</li>
+                            <li>Embodies an early form of <span class="font-semibold">data-driven governance</span>. It shows how statistical analysis can move policy debates from pure ideology to evidence-based discussion, a principle now central to initiatives like the Analyze Boston portal.</li>
                         </ul>
                     </div>
                 </div>
